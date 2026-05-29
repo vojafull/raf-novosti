@@ -215,14 +215,17 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
             String like = "%" + query.toLowerCase() + "%";
             ps = connection.prepareStatement(
                     BASE_SELECT +
-                            "WHERE LOWER(n.title) LIKE ? OR LOWER(n.content) LIKE ? " +
+                            "JOIN news_tags nt on n.id=nt.news_id " +
+                            "JOIN tags t on t.id = nt.tag_id " +
+                            "WHERE n.title LIKE ? OR n.content LIKE ? OR t.name LIKE ? " +
                             "ORDER BY n.created_at DESC LIMIT ? OFFSET ?"
             );
 
             ps.setString(1, like);
             ps.setString(2, like);
-            ps.setInt(3, pageSize);
-            ps.setInt(4, (page - 1) * pageSize);
+            ps.setString(3, like);
+            ps.setInt(4, pageSize);
+            ps.setInt(5, (page - 1) * pageSize);
 
             rs = ps.executeQuery();
 

@@ -11,13 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6ea78c0b-7389-47f5-b553-3c5c7fbeb07c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/demo/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/demo/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/demo/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/org/example/demo/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/org/example/demo/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/org/example/demo/HelloResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/java/org/example/demo/filters/AuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/java/org/example/demo/filters/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/demo/src/main/resources/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/backend/demo/src/main/resources/schema.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Tomcat Server.Tomcat 9.0.100.executor": "Debug",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -183,6 +179,7 @@
       <workItem from="1779905864763" duration="49000" />
       <workItem from="1779905929929" duration="11773000" />
       <workItem from="1779983120724" duration="3597000" />
+      <workItem from="1780067590441" duration="74000" />
     </task>
     <servers />
   </component>
