@@ -1,7 +1,8 @@
 package org.example.demo;
 
 import org.example.demo.repositories.*;
-
+import org.example.demo.services.CategoryService;
+import org.example.demo.services.NewsService;
 import org.example.demo.services.UserService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -23,11 +24,26 @@ public class HelloApplication extends ResourceConfig {
                         .to(UserRepository.class)
                         .in(Singleton.class);
 
+                this.bind(MySqlCategoryRepository.class)
+                        .to(CategoryRepository.class)
+                        .in(Singleton.class);
 
+                this.bind(MySqlNewsRepository.class)
+                        .to(NewsRepository.class)
+                        .in(Singleton.class);
+
+                this.bind(MySqlTagRepository.class)
+                        .to(TagRepository.class)
+                        .in(Singleton.class);
+
+                this.bind(MySqlCommentRepository.class)
+                        .to(CommentRepository.class)
+                        .in(Singleton.class);
 
 
                 this.bindAsContract(UserService.class).in(Singleton.class);
-
+                this.bindAsContract(CategoryService.class).in(Singleton.class);
+                this.bindAsContract(NewsService.class).in(Singleton.class);
             }
         };
         register(binder);

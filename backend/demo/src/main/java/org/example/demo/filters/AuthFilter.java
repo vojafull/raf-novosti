@@ -71,7 +71,8 @@ public class AuthFilter implements ContainerRequestFilter {
                 || path.contains("news/category/")
                 || path.contains("reaction")
                 || (path.startsWith("news/") && path.endsWith("/comments"))
-                || ("GET".equals(method) && path.matches("news/\\d+"));
+                || ("GET".equals(method) && path.matches("news/\\d+"))
+                || ("GET".equals(method) && path.matches("categories/"));
     }
 
     private void abort(ContainerRequestContext ctx, String message) {
