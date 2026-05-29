@@ -13,4 +13,6 @@ public interface CommentRepository {
     void saveReaction(Integer commentId, String sessionId, String reaction);
     void updateReaction(Integer commentId, String sessionId, String reaction);
     void deleteReaction(Integer commentId, String sessionId);
+    int getLikes(Integer commentId);
+    int getDislikes(Integer commentId);
 }

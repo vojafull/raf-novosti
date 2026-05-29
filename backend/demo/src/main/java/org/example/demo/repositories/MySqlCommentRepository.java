@@ -234,6 +234,58 @@ public class MySqlCommentRepository extends MySqlAbstractRepository implements C
 
     }
 
+    @Override
+    public int getLikes(Integer commentId) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = this.newConnection();
+            ps = connection.prepareStatement("SELECT likes FROM comments WHERE id = ?");
+            ps.setInt(1, commentId);
+            rs = ps.executeQuery();
+
+            if (rs.next())
+                return rs.getInt("likes");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closeStatement(ps);
+            closeConnection(connection);
+        }
+
+        return 0;
+    }
+
+    @Override
+    public int getDislikes(Integer commentId) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = this.newConnection();
+            ps = connection.prepareStatement("SELECT dislikes FROM comments WHERE id = ?");
+            ps.setInt(1, commentId);
+            rs = ps.executeQuery();
+
+            if (rs.next())
+                return rs.getInt("dislikes");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResultSet(rs);
+            closeStatement(ps);
+            closeConnection(connection);
+        }
+
+        return 0;
+    }
+
     private void updateCommentCounts(Integer commentId, Connection connection) throws SQLException {
 
         PreparedStatement ps = null;

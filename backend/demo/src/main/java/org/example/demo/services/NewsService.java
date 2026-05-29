@@ -292,7 +292,11 @@ public class NewsService {
         else
             commentRepository.updateReaction(commentId, sessionId, request.getReaction());
 
-        return ServiceResponse.success("success", true);
+        Map<String, Object> response = new HashMap<>();
+        response.put("likes", commentRepository.getLikes(commentId));
+        response.put("dislikes", commentRepository.getDislikes(commentId));
+        response.put("userReaction", commentRepository.getReaction(commentId, sessionId));
+        return response;
     }
 
     private List<Tag> processTags(List<String> tagNames, Integer newsId) {
