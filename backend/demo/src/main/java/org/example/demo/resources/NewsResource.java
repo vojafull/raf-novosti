@@ -97,8 +97,9 @@ public class NewsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getComments(@PathParam("id") Integer id,
                                 @QueryParam("page") @DefaultValue("1") int page,
-                                @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
-        return Response.ok(newsService.getComments(id, page, pageSize)).build();
+                                @QueryParam("pageSize") @DefaultValue("10") int pageSize,
+                                @CookieParam("sessionId") String sessionId) {
+        return Response.ok(newsService.getComments(id, page, pageSize, sessionId)).build();
     }
 
     @POST

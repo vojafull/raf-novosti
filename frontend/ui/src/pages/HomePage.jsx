@@ -2,25 +2,22 @@ import { useState, useEffect } from 'react';
 import PublicNavbar from '../components/PublicNavbar.jsx';
 import NewsCard from '../components/NewsCard.jsx';
 import MostReactedSidebar from '../components/MostReactedSidebar.jsx';
-import { getAllNews } from '../apis/NewsApi.js';
+import {getAllNews, getLatestNews} from '../apis/NewsApi.js';
 
 const HomePage = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         setLoading(true);
-        getAllNews(page, 10)
+        getLatestNews()
             .then(data => {
-                setNews(data.items || []);
-                setTotalPages(data.totalPages || 1);
+                setNews(data || []);
             })
             .catch(() => setError('Greška pri ucitavanju vesti.'))
             .finally(() => setLoading(false));
-    }, [page]);
+    }, []);
 
     return (
         <>

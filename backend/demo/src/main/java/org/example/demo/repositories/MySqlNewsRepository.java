@@ -217,15 +217,14 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
                     BASE_SELECT +
                             "JOIN news_tags nt on n.id=nt.news_id " +
                             "JOIN tags t on t.id = nt.tag_id " +
-                            "WHERE n.title LIKE ? OR n.content LIKE ? OR t.name LIKE ? " +
+                            "WHERE n.title LIKE ? OR n.content LIKE ? " +
                             "ORDER BY n.created_at DESC LIMIT ? OFFSET ?"
             );
 
             ps.setString(1, like);
             ps.setString(2, like);
-            ps.setString(3, like);
-            ps.setInt(4, pageSize);
-            ps.setInt(5, (page - 1) * pageSize);
+            ps.setInt(3, pageSize);
+            ps.setInt(4, (page - 1) * pageSize);
 
             rs = ps.executeQuery();
 
@@ -724,15 +723,49 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
         try {
             connection = this.newConnection();
             ps = connection.prepareStatement(
-                    BASE_SELECT +
+                    "SELECT n.id, n.title, n.content, n.created_at, n.visit_count, " +
+                            "u.id as author_id, u.email as author_email, " +
+                            "u.first_name as author_first_name, u.last_name as author_last_name, " +
+                            "u.type as author_type, u.status as author_status, " +
+                            "c.id as category_id, c.name as category_name, c.description as category_description, " +
+                            "SUM(CASE WHEN nr.reaction = 'LIKE' THEN 1 ELSE 0 END) as likes, " +
+                            "SUM(CASE WHEN nr.reaction = 'DISLIKE' THEN 1 ELSE 0 END) as dislikes " +
+                            "FROM news n " +
+                            "JOIN users u ON n.author_id = u.id " +
+                            "JOIN categories c ON n.category_id = c.id " +
                             "LEFT JOIN news_reactions nr ON n.id = nr.news_id " +
                             "GROUP BY n.id, u.id, c.id " +
-                            "ORDER BY COUNT(nr.id) DESC LIMIT ?"
+                            "ORDER BY (SUM(CASE WHEN nr.reaction = 'LIKE' THEN 1 ELSE 0 END) + SUM(CASE WHEN nr.reaction = 'DISLIKE' THEN 1 ELSE 0 END)) DESC LIMIT ?"
             );
             ps.setInt(1, limit);
             rs = ps.executeQuery();
             while (rs.next()) {
-                newsList.add(mapRow(rs));
+                User author = new User(
+                        rs.getInt("author_id"),
+                        rs.getString("author_email"),
+                        rs.getString("author_first_name"),
+                        rs.getString("author_last_name"),
+                        rs.getString("author_type"),
+                        rs.getString("author_status"),
+                        null
+                );
+                Category category = new Category(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name"),
+                        rs.getString("category_description")
+                );
+                News news = new News(
+                        rs.getInt("n.id"),
+                        rs.getString("n.title"),
+                        rs.getString("n.content"),
+                        rs.getTimestamp("n.created_at").toLocalDateTime(),
+                        rs.getInt("n.visit_count"),
+                        rs.getInt("likes"),
+                        rs.getInt("dislikes"),
+                        author,
+                        category
+                );
+                newsList.add(news);
             }
         } catch (SQLException e) {
             e.printStackTrace();

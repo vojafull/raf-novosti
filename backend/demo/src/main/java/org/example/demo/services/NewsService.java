@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class NewsService {
 
@@ -232,13 +233,26 @@ public class NewsService {
         return ServiceResponse.success("comment", commentRepository.save(comment));
     }
 
-    public Map<String, Object> getComments(Integer newsId, int page, int pageSize) {
-
+    public Map<String, Object> getComments(Integer newsId, int page, int pageSize, String sessionId) {
         List<Comment> comments = commentRepository.findByNewsId(newsId, page, pageSize);
 
-        int total = commentRepository.countByNewsId(newsId);
+        List<Map<String, Object>> commentsWithReactions = comments.stream().map(comment -> {
+            Map<String, Object> c = new HashMap<>();
+            c.put("id", comment.getId());
+            c.put("authorName", comment.getAuthorName());
+            c.put("content", comment.getContent());
+            c.put("createdAt", comment.getCreatedAt());
+            c.put("likes", commentRepository.getLikes(comment.getId()));
+            c.put("dislikes", commentRepository.getDislikes(comment.getId()));
+            c.put("userReaction", sessionId != null ? commentRepository.getReaction(comment.getId(), sessionId) : null);
+            return c;
+        }).collect(Collectors.toList());
 
-        return buildPageResponse(comments, total, page, pageSize);
+        int total = commentRepository.countByNewsId(newsId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("items", commentsWithReactions);
+        response.put("totalPages", (int) Math.ceil((double) total / pageSize));
+        return response;
     }
 
     public Map<String, Object> reactToNews(Integer newsId, String sessionId, ReactionRequest request) {
