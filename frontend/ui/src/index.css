@@ -1,0 +1,35 @@
+/* ISPRAVKA: Originalni fajl pravio uski stub sa granicama!
+   #root imao: width:1126px, text-align:center, border-inline, display:flex
+   Sve to brisemo - Bootstrap se brine za layout. */
+
+:root {
+  color-scheme: light only;
+  color: #212529;
+  background-color: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* NEMA: width, text-align:center, border-inline, display:flex */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+a { color: #0d6efd; text-decoration: none; }
+a:hover { color: #0a58ca; }
+
+.card { transition: box-shadow 0.2s ease; }
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12) !important; }
+
+.badge { cursor: pointer; }
+.table th { white-space: nowrap; }
