@@ -27,7 +27,7 @@ const CmsNewsPage = () => {
         const request = isSearching && searchQuery
             ? searchNews(searchQuery, p, 10)
             : categoryId
-                ? getNewsByCategory(categoryId, p, 10)  // DODATI OVU LINIJU
+                ? getNewsByCategory(categoryId, p, 10)
                 : getAllNews(p, 10);
 
         request
@@ -35,7 +35,7 @@ const CmsNewsPage = () => {
                 setNews(data.items || []);
                 setTotalPages(data.totalPages || 1);
             })
-            .catch(() => setError('Greška pri ucitavanju vesti.'))
+            .catch(() => setError('Greska pri ucitavanju vesti.'))
             .finally(() => setLoading(false));
     };
 

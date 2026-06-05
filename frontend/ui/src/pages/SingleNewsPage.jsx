@@ -38,6 +38,12 @@ const NewsDetailPage = () => {
             setUserReaction(newsData.userReaction || null);
             setComments(commentsData.items || []);
             setCommentsTotalPages(commentsData.totalPages || 1);
+
+            const reactions = {};
+            (commentsData.items || []).forEach(c => {
+                if (c.userReaction) reactions[c.id] = c.userReaction;
+            });
+            setCommentReactions(reactions);
         })
             .catch(() => setError('Vest nije pronadjena.'))
             .finally(() => setLoading(false));
@@ -87,13 +93,13 @@ const NewsDetailPage = () => {
 
     const [commentReactions, setCommentReactions] = useState(() => {
         try {
-            const saved = sessionStorage.getItem(`commentReactions_${id}`);
+            const saved = localStorage.getItem(`commentReactions_${id}`);
             return saved ? JSON.parse(saved) : {};
         } catch { return {}; }
     });
 
     useEffect(() => {
-        sessionStorage.setItem(`commentReactions_${id}`, JSON.stringify(commentReactions));
+        localStorage.setItem(`commentReactions_${id}`, JSON.stringify(commentReactions));
     }, [commentReactions, id]);
 
     const handleCommentReaction = async (commentId, reaction) => {
